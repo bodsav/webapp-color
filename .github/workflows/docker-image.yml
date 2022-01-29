@@ -1,0 +1,20 @@
+name: Dockerimage
+
+on:
+  workflow_dispatch:
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build and push image to Docker registry
+      run: | 
+        echo "${{ secrets.DOCKER_PW }}" |  docker login -u "sivavarmaboddu" --password-stdin 
+        #docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+        docker image build -t sivavarmaboddu/webapp-color
+        docker push sivavarmaboddu/webapp-color
+        
